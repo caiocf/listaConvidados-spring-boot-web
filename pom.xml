@@ -85,11 +85,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<executable>true</executable>
-				</configuration>
+				<executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
 			</plugin>
-
 
 			<!-- gera um RPM a partir do JAR executavel para instalar baseado em RPM, 
 				necessario term o programa rpm instalado -->
