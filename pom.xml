@@ -1,0 +1,124 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.caiocf.listavip</groupId>
+	<artifactId>listvip</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.7</jdk.version>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.7</maven.compiler.source>
+
+	</properties>
+
+	<dependencies>
+		<!-- Dependencia spring boot start web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+			<version>1.4.3.RELEASE</version>
+		</dependency>
+        
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+			<version>1.4.3.RELEASE</version>
+		</dependency>
+
+		<!-- ferramenta de monitoramente health da aplicacao -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+			<version>1.4.3.RELEASE</version>
+		</dependency>
+
+		<!-- thymeleaf engine de templetes e com suporte EL (Expression Language) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<version>1.4.3.RELEASE</version>
+		</dependency>
+
+		<!-- todas as dependências com Hibernate e JPA -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<version>1.4.3.RELEASE</version>
+		</dependency>
+
+		<!-- driver de conexão do Mysql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.40</version>
+		</dependency>
+
+		<!-- feramenta para desenvolver com hotdeploy, nao habilitar em produção -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<version>1.4.3.RELEASE</version>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- dependencia para o envio de mail -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.4</version>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<!-- Spring boot -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
+			</plugin>
+
+
+			<!-- gera um RPM a partir do JAR executavel para instalar baseado em RPM, 
+				necessario term o programa rpm instalado -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>rpm-maven-plugin</artifactId>
+				<version>2.1.5</version>
+				<configuration>
+					<copyright>2010 - dimitrisli</copyright>
+					<group>Application/Collectors</group>
+					<release>${project.version}</release>
+					<mappings>
+						<mapping>
+							<directoryIncluded>false</directoryIncluded>
+							<directory>/opt/listvip</directory>
+							<username>root</username>
+							<groupname>root</groupname>
+							<filemode>640</filemode>
+							<sources>
+								<source>
+									<location>${project.build.directory}/${finalName}.jar</location>
+								</source>
+							</sources>
+						</mapping>
+					</mappings>
+				</configuration>
+			</plugin>
+		</plugins>
+		<finalName>${project.artifactId}</finalName>
+	</build>
+
+</project>
